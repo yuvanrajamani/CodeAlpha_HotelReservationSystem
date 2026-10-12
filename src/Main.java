@@ -2,12 +2,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
-
-/** Console interface for the Hotel Reservation System. */
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static Hotel hotel;
-
     public static void main(String[] args) {
         hotel = new Hotel("CodeAlpha Grand Hotel", BookingStore.load());
         System.out.println("===== Welcome to " + hotel.getName() + " =====");
@@ -37,14 +34,12 @@ public class Main {
             }
         }
     }
-
     private static void showCategories() {
         System.out.println("\n--- Room Categories ---");
         for (RoomCategory c : RoomCategory.values()) {
             System.out.printf("%-9s Rs.%-6.0f/night  %s%n", c, c.getPricePerNight(), c.getDescription());
         }
     }
-
     private static LocalDate readDate(String prompt) {
         while (true) {
             System.out.print(prompt + " (yyyy-mm-dd): ");
@@ -55,7 +50,6 @@ public class Main {
             }
         }
     }
-
     private static RoomCategory readCategory(boolean allowAll) {
         while (true) {
             System.out.print("Category (STANDARD / DELUXE / SUITE" + (allowAll ? " / ALL" : "") + "): ");
@@ -68,8 +62,6 @@ public class Main {
             }
         }
     }
-
-    /** Reads and validates a check-in/check-out pair. Returns null if invalid. */
     private static LocalDate[] readDates() {
         LocalDate in = readDate("Check-in date");
         LocalDate out = readDate("Check-out date");
@@ -83,7 +75,6 @@ public class Main {
         }
         return new LocalDate[]{in, out};
     }
-
     private static void searchRooms() {
         RoomCategory cat = readCategory(true);
         LocalDate[] d = readDates();
@@ -96,7 +87,6 @@ public class Main {
         System.out.println("\nAvailable rooms:");
         for (Room r : available) System.out.println("  " + r);
     }
-
     private static void bookRoom() {
         RoomCategory cat = readCategory(false);
         LocalDate[] d = readDates();
@@ -147,7 +137,6 @@ public class Main {
         System.out.println("\nBooking confirmed!");
         b.printDetails();
     }
-
     private static void viewBooking() {
         System.out.print("Enter booking ID (or guest name): ");
         String q = scanner.nextLine().trim();
@@ -160,7 +149,6 @@ public class Main {
         if (found.isEmpty()) System.out.println("No booking found.");
         for (Booking x : found) x.printDetails();
     }
-
     private static void cancelBooking() {
         System.out.print("Enter booking ID to cancel: ");
         Booking b = hotel.findBooking(scanner.nextLine().trim());
@@ -182,7 +170,6 @@ public class Main {
         BookingStore.save(hotel.getBookings());
         System.out.printf("Booking %s cancelled. Refund: Rs.%.2f%n", b.getId(), refund);
     }
-
     private static void listAllBookings() {
         if (hotel.getBookings().isEmpty()) {
             System.out.println("No bookings yet.");
