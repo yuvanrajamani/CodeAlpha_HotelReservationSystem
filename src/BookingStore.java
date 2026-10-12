@@ -4,11 +4,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-/** Persists bookings to bookings.csv using file I/O. */
 public class BookingStore {
     private static final Path FILE = Paths.get("bookings.csv");
-
     public static List<Booking> load() {
         List<Booking> list = new ArrayList<>();
         if (!Files.exists(FILE)) return list;
@@ -21,7 +18,6 @@ public class BookingStore {
         }
         return list;
     }
-
     public static void save(List<Booking> bookings) {
         List<String> lines = new ArrayList<>();
         for (Booking b : bookings) lines.add(b.toFileLine());
