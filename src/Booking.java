@@ -1,10 +1,7 @@
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
-/** A reservation made by a guest. */
 public class Booking {
     public enum Status { CONFIRMED, CANCELLED }
-
     private final String id;
     private final String guestName;
     private final String phone;
@@ -17,7 +14,6 @@ public class Booking {
     private final String transactionId;
     private Status status;
     private double refundAmount;
-
     public Booking(String id, String guestName, String phone, int roomNumber, RoomCategory category,
                    LocalDate checkIn, LocalDate checkOut, double totalAmount,
                    String paymentMethod, String transactionId, Status status, double refundAmount) {
@@ -34,7 +30,6 @@ public class Booking {
         this.status = status;
         this.refundAmount = refundAmount;
     }
-
     public String getId() { return id; }
     public String getGuestName() { return guestName; }
     public String getPhone() { return phone; }
@@ -54,18 +49,14 @@ public class Booking {
         this.status = Status.CANCELLED;
         this.refundAmount = refund;
     }
-
-    /** True if this active booking overlaps the given date range for the given room. */
     public boolean overlaps(int room, LocalDate in, LocalDate out) {
         return isActive() && roomNumber == room && in.isBefore(checkOut) && out.isAfter(checkIn);
     }
-
     public String toFileLine() {
         return String.join(",", id, guestName, phone, String.valueOf(roomNumber), category.name(),
                 checkIn.toString(), checkOut.toString(), String.valueOf(totalAmount),
                 paymentMethod, transactionId, status.name(), String.valueOf(refundAmount));
     }
-
     public static Booking fromFileLine(String line) {
         String[] f = line.split(",");
         return new Booking(f[0], f[1], f[2], Integer.parseInt(f[3]), RoomCategory.valueOf(f[4]),
