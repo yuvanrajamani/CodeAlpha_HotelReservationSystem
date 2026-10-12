@@ -1,11 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
-
-/** Simulates a payment gateway. No real money or card data is processed. */
 public class PaymentProcessor {
     private static final Random random = new Random();
-
-    /** Returns a transaction id on success, or null if the payment failed/was cancelled. */
     public static String pay(Scanner scanner, double amount, String[] methodOut) {
         System.out.printf("%nAmount to pay: Rs.%.2f%n", amount);
         System.out.println("Payment method: 1. Credit/Debit Card  2. UPI  3. Cash at hotel");
